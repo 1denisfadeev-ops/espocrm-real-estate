@@ -6,8 +6,5 @@
     "scopeNamesPlural": {
         "CBuilding": "Корпуса",
         "CApartment": "Квартиры"
-    },
-    "dashlets": {
-        "CTest": "Проверка кастомного кода"
     }
 }
