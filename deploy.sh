@@ -10,8 +10,16 @@
 
 set -e
 
+HERE=$(dirname "$0")
+
+# Имя контейнера берём из .env рядом со скриптом: так один и тот же
+# deploy.sh обслуживает и рабочий экземпляр, и любой другой.
+if [ -f "$HERE/.env" ]; then
+    . "$HERE/.env"
+fi
+
 CONTAINER="${ESPO_CONTAINER:-espocrm}"
-SRC=$(dirname "$0")/espo-custom
+SRC="$HERE/espo-custom"
 
 docker cp "$SRC/backend/Espo/." "$CONTAINER:/var/www/html/custom/Espo/"
 docker cp "$SRC/client/src" "$CONTAINER:/var/www/html/client/custom/"
