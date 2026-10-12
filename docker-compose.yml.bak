@@ -1,0 +1,98 @@
+# EspoCRM на своем компьютере
+# Урок 5, часть 2: своя CRM без сервера
+#
+# Перед запуском: открой Docker Desktop и дождись, пока он загрузится.
+#
+# Запуск (в терминале VS Code, в папке с этим файлом):
+#   docker compose up -d
+# или просто попроси Claude Code запустить этот файл.
+#
+# Первый запуск занимает несколько минут: Docker скачивает CRM и базу.
+# Потом открой в браузере: http://localhost:8080
+# Логин: admin, пароль: задаётся в .env. Сразу после входа поменяй пароль в профиле.
+#
+# Остановить CRM:     docker compose stop
+# Запустить снова:    docker compose start
+# Данные при этом сохраняются.
+#
+# НЕ ЗАПУСКАЙ docker compose down --volumes (или -v): это удалит всю базу CRM.
+# Удаление самого Docker Desktop тоже сотрет все данные CRM.
+#
+# Основа: официальный пример из репозитория espocrm/espocrm-docker.
+
+services:
+
+  # База данных: здесь хранятся клиенты, сделки, задачи
+  espocrm-db:
+    image: mariadb:latest
+    container_name: espocrm-db
+    environment:
+      MARIADB_ROOT_PASSWORD: change_me_root_password
+      MARIADB_DATABASE: espocrm
+      MARIADB_USER: espocrm
+      MARIADB_PASSWORD: change_me_db_password
+    volumes:
+      - espocrm-db:/var/lib/mysql
+    restart: always
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 20s
+      start_period: 10s
+      timeout: 10s
+      retries: 3
+
+  # Сама CRM, открывается на http://localhost:8080
+  espocrm:
+    image: espocrm/espocrm
+    container_name: espocrm
+    environment:
+      ESPOCRM_DATABASE_PLATFORM: Mysql
+      ESPOCRM_DATABASE_HOST: espocrm-db
+      ESPOCRM_DATABASE_USER: espocrm
+      ESPOCRM_DATABASE_PASSWORD: change_me_db_password
+      # Логин и пароль админа. Срабатывают только при самом первом запуске,
+      # дальше пароль меняется уже внутри CRM.
+      ESPOCRM_ADMIN_USERNAME: admin
+      ESPOCRM_ADMIN_PASSWORD: change_me_admin_password
+      ESPOCRM_SITE_URL: "http://localhost:8080"
+    volumes:
+      - espocrm:/var/www/html
+    restart: always
+    depends_on:
+      espocrm-db:
+        condition: service_healthy
+    ports:
+      - 8080:80
+
+  # Фоновые задачи: напоминания и плановые действия
+  espocrm-daemon:
+    image: espocrm/espocrm
+    container_name: espocrm-daemon
+    volumes:
+      - espocrm:/var/www/html
+    restart: always
+    depends_on:
+      - espocrm
+    entrypoint: docker-daemon.sh
+
+  # Мгновенные уведомления в интерфейсе
+  espocrm-websocket:
+    image: espocrm/espocrm
+    container_name: espocrm-websocket
+    environment:
+      ESPOCRM_CONFIG_USE_WEB_SOCKET: "true"
+      ESPOCRM_CONFIG_WEB_SOCKET_URL: "ws://localhost:8081"
+      ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBSCRIBER_DSN: "tcp://*:7777"
+      ESPOCRM_CONFIG_WEB_SOCKET_ZERO_M_Q_SUBMISSION_DSN: "tcp://espocrm-websocket:7777"
+    volumes:
+      - espocrm:/var/www/html
+    restart: always
+    depends_on:
+      - espocrm
+    entrypoint: docker-websocket.sh
+    ports:
+      - 8081:8080
+
+volumes:
+  espocrm:
+  espocrm-db:
