@@ -68,6 +68,15 @@ docker exec -u www-data espocrm php bin/command clear-cache
 docker exec espocrm rm /var/www/html/locale.php
 ```
 
+Раздел «Недвижимость» в меню CRM:
+
+```bash
+docker cp espo-custom/tools/menu.php espocrm:/var/www/html/menu.php
+docker exec -u www-data espocrm php /var/www/html/menu.php
+docker exec -u www-data espocrm php bin/command clear-cache
+docker exec espocrm rm /var/www/html/menu.php
+```
+
 Демонстрационные данные — корпус на 9 этажей по 4 квартиры:
 
 ```bash
@@ -115,6 +124,7 @@ espo-custom/
   tools/
     seed.php                демонстрационные корпус и квартиры
     locale.php              русская локаль и формат чисел
+    menu.php                раздел «Недвижимость» в меню CRM
 docs/                       скриншоты
 ```
 
@@ -135,7 +145,10 @@ docs/                       скриншоты
 2. **В EspoCRM 10 клиент собран в бандлы**, исходников `client/src` в образе нет.
    Свой код грузится из `client/custom/src` по префиксу `custom:` — это работает,
    но примеров из документации под старые версии там не найти.
-3. **Кэш двухслойный.** После правок нужен `rebuild` на сервере (его делает `deploy.sh`)
+3. **Настройки CRM лежат вне git** — в `data/config.php` внутри тома Docker.
+   Поэтому язык, формат чисел и состав меню вынесены в скрипты `tools/locale.php`
+   и `tools/menu.php`: иначе на новой установке их пришлось бы повторять руками.
+4. **Кэш двухслойный.** После правок нужен `rebuild` на сервере (его делает `deploy.sh`)
    и жёсткое обновление страницы в браузере.
 
 ## Чего пока нет
