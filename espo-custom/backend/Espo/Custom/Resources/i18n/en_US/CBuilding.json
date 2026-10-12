@@ -1,0 +1,18 @@
+{
+    "labels": {
+        "Create CBuilding": "Create Building"
+    },
+    "fields": {
+        "name": "Name",
+        "address": "Address",
+        "floorCount": "Floors",
+        "lineCount": "Apartments per floor",
+        "description": "Description"
+    },
+    "links": {
+        "apartments": "Apartments"
+    },
+    "tooltips": {
+        "lineCount": "How many apartments in a row on one floor. Sets the chessboard width."
+    }
+}

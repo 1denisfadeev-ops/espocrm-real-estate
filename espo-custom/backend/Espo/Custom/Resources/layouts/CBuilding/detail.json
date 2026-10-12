@@ -1,0 +1,10 @@
+[
+    {
+        "rows": [
+            [{"name": "name"}, {"name": "address"}],
+            [{"name": "floorCount"}, {"name": "lineCount"}],
+            [{"name": "description"}, false],
+            [{"name": "assignedUser"}, {"name": "teams"}]
+        ]
+    }
+]

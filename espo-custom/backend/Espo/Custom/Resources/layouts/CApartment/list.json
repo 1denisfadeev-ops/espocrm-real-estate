@@ -1,0 +1,10 @@
+[
+    {"name": "name", "link": true, "width": 8},
+    {"name": "building", "width": 18},
+    {"name": "floor", "width": 8},
+    {"name": "position", "width": 10},
+    {"name": "rooms", "width": 8},
+    {"name": "area", "width": 10},
+    {"name": "price", "width": 14},
+    {"name": "status", "width": 12}
+]

@@ -1,0 +1,9 @@
+[
+    {
+        "rows": [
+            [{"name": "name"}, {"name": "status"}],
+            [{"name": "floor"}, {"name": "position"}],
+            [{"name": "area"}, {"name": "price"}]
+        ]
+    }
+]

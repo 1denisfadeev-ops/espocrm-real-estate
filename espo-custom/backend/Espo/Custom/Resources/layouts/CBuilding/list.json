@@ -1,0 +1,6 @@
+[
+    {"name": "name", "link": true},
+    {"name": "address"},
+    {"name": "floorCount"},
+    {"name": "lineCount"}
+]

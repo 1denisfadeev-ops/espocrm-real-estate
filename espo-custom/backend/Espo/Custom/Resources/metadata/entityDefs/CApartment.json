@@ -1,0 +1,125 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "required": true,
+            "maxLength": 20,
+            "pattern": "$noBadCharacters"
+        },
+        "building": {
+            "type": "link",
+            "required": true
+        },
+        "floor": {
+            "type": "int",
+            "required": true,
+            "min": -5,
+            "max": 200
+        },
+        "position": {
+            "type": "int",
+            "required": true,
+            "min": 1,
+            "max": 50,
+            "tooltip": true
+        },
+        "rooms": {
+            "type": "int",
+            "min": 0,
+            "max": 20
+        },
+        "area": {
+            "type": "float",
+            "min": 0,
+            "max": 10000
+        },
+        "price": {
+            "type": "currency"
+        },
+        "status": {
+            "type": "enum",
+            "required": true,
+            "options": ["Free", "Booked", "Sold"],
+            "default": "Free",
+            "style": {
+                "Free": "success",
+                "Booked": "warning",
+                "Sold": "danger"
+            },
+            "displayAsLabel": true,
+            "audited": true
+        },
+        "description": {
+            "type": "text"
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "assignedUser": {
+            "type": "link",
+            "view": "views/fields/assigned-user"
+        },
+        "teams": {
+            "type": "linkMultiple",
+            "view": "views/fields/teams"
+        }
+    },
+    "links": {
+        "building": {
+            "type": "belongsTo",
+            "entity": "CBuilding",
+            "foreign": "apartments"
+        },
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "teams": {
+            "type": "hasMany",
+            "entity": "Team",
+            "relationName": "entityTeam",
+            "layoutRelationshipsDisabled": true
+        }
+    },
+    "collection": {
+        "orderBy": "floor",
+        "order": "desc"
+    },
+    "indexes": {
+        "name": {
+            "columns": ["name", "deleted"]
+        },
+        "buildingPlace": {
+            "columns": ["buildingId", "floor", "position", "deleted"]
+        },
+        "status": {
+            "columns": ["status", "deleted"]
+        },
+        "assignedUser": {
+            "columns": ["assignedUserId", "deleted"]
+        }
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "labels": {
+        "Create CBuilding": "Добавить корпус"
+    },
+    "fields": {
+        "name": "Название",
+        "address": "Адрес",
+        "floorCount": "Этажей",
+        "lineCount": "Квартир на этаже",
+        "description": "Примечание"
+    },
+    "links": {
+        "apartments": "Квартиры"
+    },
+    "tooltips": {
+        "lineCount": "Сколько квартир в ряду на одном этаже. Задаёт ширину шахматки."
+    }
+}

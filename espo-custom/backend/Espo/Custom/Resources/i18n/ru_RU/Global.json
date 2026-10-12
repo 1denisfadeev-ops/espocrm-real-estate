@@ -1,4 +1,12 @@
 {
+    "scopeNames": {
+        "CBuilding": "Корпус",
+        "CApartment": "Квартира"
+    },
+    "scopeNamesPlural": {
+        "CBuilding": "Корпуса",
+        "CApartment": "Квартиры"
+    },
     "dashlets": {
         "CTest": "Проверка кастомного кода"
     }

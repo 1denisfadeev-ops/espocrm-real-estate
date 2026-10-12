@@ -1,0 +1,12 @@
+[
+    {
+        "rows": [
+            [{"name": "name"}, {"name": "status"}],
+            [{"name": "building"}, {"name": "floor"}],
+            [{"name": "position"}, {"name": "rooms"}],
+            [{"name": "area"}, {"name": "price"}],
+            [{"name": "description"}, false],
+            [{"name": "assignedUser"}, {"name": "teams"}]
+        ]
+    }
+]

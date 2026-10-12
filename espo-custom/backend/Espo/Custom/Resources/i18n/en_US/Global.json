@@ -1,0 +1,13 @@
+{
+    "scopeNames": {
+        "CBuilding": "Building",
+        "CApartment": "Apartment"
+    },
+    "scopeNamesPlural": {
+        "CBuilding": "Buildings",
+        "CApartment": "Apartments"
+    },
+    "dashlets": {
+        "CTest": "Custom code check"
+    }
+}

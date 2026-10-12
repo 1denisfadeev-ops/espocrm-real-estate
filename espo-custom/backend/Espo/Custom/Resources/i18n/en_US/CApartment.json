@@ -1,0 +1,30 @@
+{
+    "labels": {
+        "Create CApartment": "Create Apartment",
+        "Chessboard": "Chessboard"
+    },
+    "fields": {
+        "name": "Number",
+        "building": "Building",
+        "floor": "Floor",
+        "position": "Position on floor",
+        "rooms": "Rooms",
+        "area": "Area, m²",
+        "price": "Price",
+        "status": "Status",
+        "description": "Description"
+    },
+    "links": {
+        "building": "Building"
+    },
+    "options": {
+        "status": {
+            "Free": "Available",
+            "Booked": "Reserved",
+            "Sold": "Sold"
+        }
+    },
+    "tooltips": {
+        "position": "Place of the apartment in a row on the floor, left to right: 1, 2, 3… This is the chessboard horizontal axis."
+    }
+}
