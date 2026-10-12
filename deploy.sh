@@ -23,7 +23,12 @@ SRC="$HERE/espo-custom"
 
 docker cp "$SRC/backend/Espo/." "$CONTAINER:/var/www/html/custom/Espo/"
 docker cp "$SRC/client/src" "$CONTAINER:/var/www/html/client/custom/"
-docker cp "$SRC/client/res" "$CONTAINER:/var/www/html/client/custom/"
+
+# Папка с шаблонами появляется, только если они есть: шахматка держит
+# разметку внутри вьюхи, поэтому сейчас её нет.
+if [ -d "$SRC/client/res" ]; then
+    docker cp "$SRC/client/res" "$CONTAINER:/var/www/html/client/custom/"
+fi
 
 # Файлы от docker cp принадлежат root, а apache работает под www-data.
 docker exec "$CONTAINER" chown -R www-data:www-data /var/www/html/custom /var/www/html/client/custom
