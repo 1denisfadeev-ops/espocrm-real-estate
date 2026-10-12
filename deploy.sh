@@ -6,10 +6,11 @@
 # Контейнеры при этом не пересоздаются, данные CRM не трогаются.
 #
 # Запуск:  ./deploy.sh
+# Другой экземпляр:  ESPO_CONTAINER=espo-test ./deploy.sh
 
 set -e
 
-CONTAINER=espocrm
+CONTAINER="${ESPO_CONTAINER:-espocrm}"
 SRC=$(dirname "$0")/espo-custom
 
 docker cp "$SRC/backend/Espo/." "$CONTAINER:/var/www/html/custom/Espo/"
